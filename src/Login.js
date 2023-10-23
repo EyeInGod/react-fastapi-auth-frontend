@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router";
 import { fetchToken } from "./Auth";
+import axios from "axios";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -13,6 +14,21 @@ const Login = () => {
             return;
         } else {
             // make api call to our backend. we'll leave this for later
+            axios
+                .post("http://localhost:8000/login", {
+                    username: username,
+                    password: password,
+                })
+                .then(function (response) {
+                    console.log(response.data.token, "response.data.token");
+                    if (response.data.token) {
+                        setToken(response.data.token);
+                        navigate("/profile");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error, "error");
+                });
         }
     };
 
@@ -30,15 +46,15 @@ const Login = () => {
                             <input
                                 type="text"
                                 onChange={(e) => setUsername(e.target.value)}
-                                />
+                            />
 
                             <label style={{ marginRight: 10 }}>Input Password</label>
                             <input
                                 type="text"
                                 onChange={(e) => setPassword(e.target.value)}
-                                />
+                            />
 
-                            <button onClick={login}>Login</button>
+                            <button type="button" onClick={login}>Login</button>
                         </form>
                     </div>
                 )}
