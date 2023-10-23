@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router";
-import { fetchToken } from "./Auth";
+import { fetchToken, setToken } from "./Auth";
 import axios from "axios";
 
 const Login = () => {
