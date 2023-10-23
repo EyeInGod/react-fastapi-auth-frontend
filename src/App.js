@@ -2,6 +2,7 @@ import React  from 'react';
 import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Profile from "./Profile";
+import { RequireToken } from "./Auth";
 import './App.css';
 
 function App() {
@@ -9,7 +10,11 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element = {<Login/>}/>
-        <Route path="/profile" element = {<Profile/>}/>
+        <Route path="/profile" element={
+          <RequireToken>
+            <Profile />
+          </RequireToken>
+        }/>
       </Routes>
     </div>
   );
